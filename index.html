@@ -439,16 +439,8 @@ function showPopup(en, ar) {
 }
 
 // التهيئة
-fetch('words.json')
-  .then(response => response.json())
-  .then(data => {
-    for (let level in data) {
-      if (vocabulary[level]) vocabulary[level] = data[level];
-    }
-    renderWords();
-  })
-  .catch(() => renderWords());
-
+renderWords();
+renderStories();
 renderStories();
 </script>
 </body>
