@@ -1,0 +1,50 @@
+{
+  "A1": [
+    {"en": "apple", "ar": "تفاحة", "ex": "I eat an apple every day.", "exAr": "آكل تفاحة كل يوم."},
+    {"en": "book", "ar": "كتاب", "ex": "She reads a book.", "exAr": "هي تقرأ كتاباً."},
+    {"en": "water", "ar": "ماء", "ex": "I drink water.", "exAr": "أشرب الماء."},
+    {"en": "house", "ar": "منزل", "ex": "My house is big.", "exAr": "منزلي كبير."},
+    {"en": "friend", "ar": "صديق", "ex": "He is my friend.", "exAr": "هو صديقي."},
+    {"en": "happy", "ar": "سعيد", "ex": "I am very happy.", "exAr": "أنا سعيد جداً."},
+    {"en": "school", "ar": "مدرسة", "ex": "They go to school.", "exAr": "هم يذهبون إلى المدرسة."},
+    {"en": "run", "ar": "يركض", "ex": "Let's run in the park.", "exAr": "لنركض في الحديقة."}
+  ],
+  "A2": [
+    {"en": "travel", "ar": "يسافر", "ex": "We travel to Egypt.", "exAr": "نسافر إلى مصر."},
+    {"en": "weather", "ar": "الطقس", "ex": "The weather is nice.", "exAr": "الطقس جميل."},
+    {"en": "borrow", "ar": "يستعير", "ex": "Can I borrow your pen?", "exAr": "هل يمكنني استعارة قلمك؟"},
+    {"en": "arrive", "ar": "يصل", "ex": "The train will arrive soon.", "exAr": "سيصل القطار قريباً."},
+    {"en": "expensive", "ar": "غالي", "ex": "This phone is expensive.", "exAr": "هذا الهاتف غالي."},
+    {"en": "decide", "ar": "يقرر", "ex": "She decided to study.", "exAr": "قررت أن تدرس."},
+    {"en": "remember", "ar": "يتذكر", "ex": "I can't remember his name.", "exAr": "لا أستطيع تذكر اسمه."}
+  ],
+  "B1": [
+    {"en": "achieve", "ar": "يحقق", "ex": "She worked hard to achieve her goals.", "exAr": "عملت بجد لتحقيق أهدافها."},
+    {"en": "environment", "ar": "البيئة", "ex": "We must protect the environment.", "exAr": "يجب علينا حماية البيئة."},
+    {"en": "experience", "ar": "خبرة", "ex": "He has experience in teaching.", "exAr": "لديه خبرة في التدريس."},
+    {"en": "improve", "ar": "يحسن", "ex": "I want to improve my English.", "exAr": "أريد تحسين لغتي الإنجليزية."},
+    {"en": "responsible", "ar": "مسؤول", "ex": "You are responsible for this.", "exAr": "أنت مسؤول عن هذا."},
+    {"en": "opportunity", "ar": "فرصة", "ex": "This is a great opportunity.", "exAr": "هذه فرصة رائعة."}
+  ],
+  "B2": [
+    {"en": "consequence", "ar": "عاقبة", "ex": "Every action has a consequence.", "exAr": "كل فعل له عاقبة."},
+    {"en": "negotiate", "ar": "يتفاوض", "ex": "They negotiated a deal.", "exAr": "تفاوضوا على صفقة."},
+    {"en": "emphasize", "ar": "يشدد", "ex": "He emphasized the importance of practice.", "exAr": "شدّد على أهمية التدريب."},
+    {"en": "reluctant", "ar": "متردد", "ex": "She was reluctant to go.", "exAr": "كانت مترددة في الذهاب."},
+    {"en": "contribute", "ar": "يساهم", "ex": "Everyone can contribute.", "exAr": "يمكن للجميع المساهمة."},
+    {"en": "inevitable", "ar": "لا مفر منه", "ex": "Change is inevitable.", "exAr": "التغيير لا مفر منه."}
+  ],
+  "C1": [
+    {"en": "ambiguous", "ar": "غامض", "ex": "His answer was ambiguous.", "exAr": "كانت إجابته غامضة."},
+    {"en": "meticulous", "ar": "دقيق", "ex": "She is meticulous in her work.", "exAr": "هي دقيقة في عملها."},
+    {"en": "pragmatic", "ar": "عملي", "ex": "We need a pragmatic approach.", "exAr": "نحن بحاجة إلى نهج عملي."},
+    {"en": "resilient", "ar": "مرن", "ex": "Children are resilient.", "exAr": "الأطفال مرنون."},
+    {"en": "compelling", "ar": "مقنع", "ex": "He made a compelling argument.", "exAr": "قدم حجة مقنعة."}
+  ],
+  "C2": [
+    {"en": "ubiquitous", "ar": "منتشر", "ex": "Smartphones are ubiquitous.", "exAr": "الهواتف الذكية منتشرة."},
+    {"en": "ephemeral", "ar": "زائل", "ex": "Fame is often ephemeral.", "exAr": "الشهرة غالباً زائلة."},
+    {"en": "quintessential", "ar": "نموذجي", "ex": "He is a quintessential leader.", "exAr": "هو قائد نموذجي."},
+    {"en": "serendipity", "ar": "حظ سعيد", "ex": "Meeting her was serendipity.", "exAr": "لقاؤها كان حظاً سعيداً."}
+  ]
+}
