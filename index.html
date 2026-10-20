@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تعلّم الإنجليزية - المفردات والقصص</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, sans-serif; }
+  body {
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
+    min-height: 100vh; color: #fff; padding: 20px;
+  }
+  header {
+    text-align: center; padding: 20px; margin-bottom: 20px;
+    background: rgba(255,255,255,0.1); border-radius: 15px;
+    backdrop-filter: blur(10px);
+  }
+  header h1 { font-size: 2em; margin-bottom: 5px; }
+  header p { opacity: 0.8; }
+
+  .tabs {
+    display: flex; gap: 10px; margin-bottom: 20px; justify-content: center;
+    flex-wrap: wrap;
+  }
+  .tab-btn {
+    padding: 12px 25px; border: none; border-radius: 10px; cursor: pointer;
+    background: rgba(255,255,255,0.15); color: #fff; font-size: 16px;
+    transition: 0.3s; font-weight: bold;
+  }
+  .tab-btn:hover { background: rgba(255,255,255,0.3); }
+  .tab-btn.active { background: #ffb703; color: #1e3c72; }
+
+  .level-selector {
+    display: flex; gap: 8px; justify-content: center; margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+  .level-btn {
+    padding: 8px 20px; border: 2px solid #ffb703; border-radius: 20px;
+    background: transparent; color: #ffb703; cursor: pointer;
+    font-weight: bold; transition: 0.3s;
+  }
+  .level-btn.active { background: #ffb703; color: #1e3c72; }
+
+  .section { display: none; }
+  .section.active { display: block; }
+
+  .words-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 15px;
+  }
+  .word-card {
+    background: rgba(255,255,255,0.1);
+    border-radius: 12px; padding: 18px;
+    border-right: 5px solid #ffb703;
+    transition: transform 0.3s, box-shadow 0.3s;
+    backdrop-filter: blur(10px);
+  }
+  .word-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+  }
+  .word-en {
+    font-size: 1.5em; font-weight: bold; color: #ffb703;
+    margin-bottom: 8px; direction: ltr; text-align: right;
+  }
+  .word-ar {
+    font-size: 1.2em; margin-bottom: 10px; color: #90e0ef;
+  }
+  .word-example {
+    background: rgba(0,0,0,0.2); padding: 10px; border-radius: 8px;
+    font-size: 0.95em; direction: ltr; text-align: left; color: #eee;
+    border-left: 3px solid #00b4d8;
+  }
+  .word-example .ar-ex {
+    direction: rtl; text-align: right; color: #90e0ef;
+    margin-top: 6px; font-size: 0.9em;
+  }
+
+  /* القصص */
+  .stories-list { display: grid; gap: 12px; }
+  .story-item {
+    background: rgba(255,255,255,0.1); padding: 18px;
+    border-radius: 12px; cursor: pointer;
+    transition: 0.3s; border-right: 5px solid #00b4d8;
+  }
+  .story-item:hover {
+    background: rgba(255,255,255,0.2);
+    transform: translateX(-5px);
+  }
+  .story-item h3 { color: #ffb703; margin-bottom: 5px; }
+  .story-item p { opacity: 0.8; font-size: 0.9em; }
+
+  /* وضع قراءة القصة */
+  #storyView { display: none; }
+  .story-header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 20px; flex-wrap: wrap; gap: 10px;
+  }
+  .back-btn {
+    padding: 10px 20px; background: #ffb703; color: #1e3c72;
+    border: none; border-radius: 8px; cursor: pointer; font-weight: bold;
+  }
+  .story-content {
+    background: rgba(255,255,255,0.1);
+    padding: 25px; border-radius: 12px;
+    line-height: 2.2; font-size: 1.15em;
+    direction: ltr; text-align: left;
+    backdrop-filter: blur(10px);
+  }
+  .clickable-word {
+    cursor: pointer; padding: 2px 4px; border-radius: 4px;
+    transition: 0.2s; display: inline-block;
+  }
+  .clickable-word:hover {
+    background: #ffb703; color: #1e3c72;
+    transform: scale(1.1);
+  }
+  .clickable-word.known { color: #90e0ef; }
+
+  /* النافذة المنبثقة */
+  .popup {
+    position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+    background: #1e3c72; color: #fff; padding: 15px 30px;
+    border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    border: 2px solid #ffb703; font-size: 1.2em;
+    z-index: 1000; opacity: 0; transition: 0.3s;
+    pointer-events: none; min-width: 250px; text-align: center;
+  }
+  .popup.show { opacity: 1; bottom: 50px; pointer-events: auto; }
+  .popup .en-pop { color: #ffb703; font-weight: bold; direction: ltr; }
+  .popup .ar-pop { color: #90e0ef; margin-top: 5px; }
+
+  .empty-msg { text-align: center; padding: 40px; opacity: 0.7; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>📚 تعلّم الإنجليزية</h1>
+  <p>مفردات مصنّفة حسب المستويات + قصص تفاعلية</p>
+</header>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="switchTab('vocab', this)">📖 المفردات</button>
+  <button class="tab-btn" onclick="switchTab('stories', this)">📚 القصص</button>
+</div>
+
+<!-- ================= المفردات ================= -->
+<section id="vocab" class="section active">
+  <div class="level-selector" id="levelSelector">
+    <button class="level-btn active" onclick="showLevel('A1', this)">A1</button>
+    <button class="level-btn" onclick="showLevel('A2', this)">A2</button>
+    <button class="level-btn" onclick="showLevel('B1', this)">B1</button>
+    <button class="level-btn" onclick="showLevel('B2', this)">B2</button>
+    <button class="level-btn" onclick="showLevel('C1', this)">C1</button>
+    <button class="level-btn" onclick="showLevel('C2', this)">C2</button>
+  </div>
+  <div class="words-grid" id="wordsGrid"></div>
+</section>
+
+<!-- ================= القصص ================= -->
+<section id="stories" class="section">
+  <div id="storiesListView">
+    <div class="stories-list" id="storiesList"></div>
+  </div>
+  <div id="storyView">
+    <div class="story-header">
+      <button class="back-btn" onclick="closeStory()">← رجوع للقصص</button>
+      <h2 id="storyTitle" style="color:#ffb703;"></h2>
+    </div>
+    <div class="story-content" id="storyContent"></div>
+  </div>
+</section>
+
+<div class="popup" id="popup">
+  <div class="en-pop" id="popEn"></div>
+  <div class="ar-pop" id="popAr"></div>
+</div>
+
+<script>
+/* ============================================================
+   بيانات المفردات (يمكنك التوسع بسهولة بإضافة كلمات جديدة)
+   ============================================================ */
+const vocabulary = {
+  A1: [
+    { en: "apple", ar: "تفاحة", ex: "I eat an apple every morning.", exAr: "آكل تفاحة كل صباح." },
+    { en: "house", ar: "منزل", ex: "My house is big and white.", exAr: "منزلي كبير وأبيض." },
+    { en: "water", ar: "ماء", ex: "Please give me some water.", exAr: "من فضلك أعطني بعض الماء." },
+    { en: "book", ar: "كتاب", ex: "She reads a book every night.", exAr: "تقرأ كتابًا كل ليلة." },
+    { en: "friend", ar: "صديق", ex: "He is my best friend.", exAr: "هو أفضل صديق لي." },
+    { en: "happy", ar: "سعيد", ex: "I am happy today.", exAr: "أنا سعيد اليوم." },
+    { en: "school", ar: "مدرسة", ex: "The children go to school.", exAr: "يذهب الأطفال إلى المدرسة." },
+    { en: "run", ar: "يركض", ex: "They run in the park.", exAr: "هم يركضون في الحديقة." },
+  ],
+  A2: [
+    { en: "travel", ar: "يسافر", ex: "We travel to Egypt every summer.", exAr: "نسافر إلى مصر كل صيف." },
+    { en: "weather", ar: "الطقس", ex: "The weather is nice today.", exAr: "الطقس جميل اليوم." },
+    { en: "borrow", ar: "يستعير", ex: "Can I borrow your pen?", exAr: "هل يمكنني استعارة قلمك؟" },
+    { en: "arrive", ar: "يصل", ex: "The train will arrive at 5 pm.", exAr: "سيصل القطار الساعة الخامسة مساءً." },
+    { en: "expensive", ar: "غالي الثمن", ex: "This phone is too expensive.", exAr: "هذا الهاتف غالٍ جدًا." },
+    { en: "decide", ar: "يقرر", ex: "She decided to study medicine.", exAr: "قررت دراسة الطب." },
+    { en: "remember", ar: "يتذكر", ex: "I can't remember his name.", exAr: "لا أستطيع تذكر اسمه." },
+  ],
+  B1: [
+    { en: "achieve", ar: "يحقق", ex: "She worked hard to achieve her goals.", exAr: "عملت بجد لتحقيق أهدافها." },
+    { en: "environment", ar: "البيئة", ex: "We must protect the environment.", exAr: "يجب علينا حماية البيئة." },
+    { en: "experience", ar: "خبرة / تجربة", ex: "He has five years of experience.", exAr: "لديه خمس سنوات من الخبرة." },
+    { en: "improve", ar: "يحسّن", ex: "I want to improve my English.", exAr: "أريد تحسين لغتي الإنجليزية." },
+    { en: "responsible", ar: "مسؤول", ex: "You are responsible for your actions.", exAr: "أنت مسؤول عن أفعالك." },
+    { en: "opportunity", ar: "فرصة", ex: "This job is a great opportunity.", exAr: "هذه الوظيفة فرصة رائعة." },
+  ],
+  B2: [
+    { en: "consequence", ar: "عاقبة / نتيجة", ex: "Every action has a consequence.", exAr: "كل فعل له نتيجة." },
+    { en: "negotiate", ar: "يتفاوض", ex: "They negotiated a better deal.", exAr: "تفاوضوا على صفقة أفضل." },
+    { en: "emphasize", ar: "يشدد على", ex: "The teacher emphasized the importance of practice.", exAr: "شدّد المعلم على أهمية التدريب." },
+    { en: "reluctant", ar: "متردد", ex: "He was reluctant to accept the offer.", exAr: "كان مترددًا في قبول العرض." },
+    { en: "contribute", ar: "يساهم", ex: "Everyone can contribute to the project.", exAr: "يمكن للجميع المساهمة في المشروع." },
+    { en: "inevitable", ar: "لا مفر منه", ex: "Change is inevitable in life.", exAr: "التغيير لا مفر منه في الحياة." },
+  ],
+  C1: [
+    { en: "ambiguous", ar: "غامض / ملتبس", ex: "The instructions were ambiguous and confusing.", exAr: "كانت التعليمات غامضة ومربكة." },
+    { en: "meticulous", ar: "دقيق جدًا", ex: "She is meticulous about her work.", exAr: "إنها دقيقة جدًا في عملها." },
+    { en: "pragmatic", ar: "عملي / واقعي", ex: "We need a pragmatic approach to solve this.", exAr: "نحتاج إلى نهج عملي لحل هذا." },
+    { en: "resilient", ar: "مرن / صلب العود", ex: "Children are often more resilient than adults.", exAr: "غالبًا ما يكون الأطفال أكثر مرونة من البالغين." },
+    { en: "compelling", ar: "مقنع / جذاب", ex: "She made a compelling argument.", exAr: "قدمت حجة مقنعة." },
+  ],
+  C2: [
+    { en: "ubiquitous", ar: "منتشر في كل مكان", ex: "Smartphones have become ubiquitous in modern society.", exAr: "أصبحت الهواتف الذكية منتشرة في كل مكان في المجتمع الحديث." },
+    { en: "ephemeral", ar: "عابر / زائل", ex: "Fame is often ephemeral.", exAr: "غالبًا ما تكون الشهرة زائلة." },
+    { en: "quintessential", ar: "نموذجي / جوهري", ex: "He is the quintessential gentleman.", exAr: "هو الرجل النموذجي المهذب." },
+    { en: "serendipity", ar: "حظ سعيد غير متوقع", ex: "Meeting her was pure serendipity.", exAr: "لقاؤها كان محض حظ سعيد." },
+    { en: "obfuscate", ar: "يشوّش / يعقّد", ex: "Politicians often obfuscate the truth.", exAr: "غالبًا ما يشوّش السياسيون الحقيقة." },
+  ]
+};
+
+/* ============================================================
+   بيانات القصص (كل كلمة تُلف بالكلمة القابلة للنقر تلقائيًا)
+   ============================================================ */
+const dictionary = {
+  // كلمات للقصص (كل الكلمات المهمة مع ترجمتها)
+  "fox": "ثعلب", "crow": "غراب", "cheese": "جبن", "tree": "شجرة",
+  "forest": "غابة", "lion": "أسد", "mouse": "فأر", "king": "ملك",
+  "help": "يساعد", "small": "صغير", "big": "كبير", "strong": "قوي",
+  "clever": "ذكي", "hungry": "جائع", "sing": "يغني", "voice": "صوت",
+  "beautiful": "جميل", "praise": "يمدح", "drop": "يُسقط", "trap": "فخ",
+  "net": "شبكة", "free": "يحرر", "promise": "يوعد", "roar": "يزأر",
+  "sun": "شمس", "wind": "ريح", "traveler": "مسافر", "coat": "معطف",
+  "warm": "دافئ", "gentle": "لطيف", "win": "يفوز", "argument": "جدال",
+  "stronger": "أقوى", "take off": "يخلع", "hold": "يمسك", "blow": "ينفخ",
+  "golden": "ذهبي", "egg": "بيضة", "farmer": "مزارع", "goose": "إوزة",
+  "greedy": "طماع", "lose": "يفقد", "garden": "حديقة", "hole": "حفرة",
+  "rain": "مطر", "ant": "نملة", "grasshopper": "جرادة", "summer": "صيف",
+  "winter": "شتاء", "food": "طعام", "lazy": "كسول", "work": "يعمل",
+  "save": "يدخر", "starve": "يتضور جوعًا", "children": "أطفال",
+  "old": "عجوز", "village": "قرية", "kind": "طيب", "honest": "صادق",
+  "rich": "غني", "poor": "فقير", "reward": "مكافأة", "honesty": "الصدق",
+  "student": "طالب", "exam": "امتحان", "study": "يدرس", "success": "نجاح",
+  "hard": "بجد", "dream": "حلم", "believe": "يؤمن", "future": "مستقبل",
+  "team": "فريق", "together": "معًا", "achieve": "يحقق", "goal": "هدف",
+  "never": "أبدًا", "give up": "يستسلم", "difficult": "صعب", "possible": "ممكن",
+  "morning": "صباح", "evening": "مساء", "mountain": "جبل", "climb": "يتسلق",
+  "view": "منظر", "tired": "متعب", "reach": "يصل", "top": "قمة",
+  "rewarding": "مُجزٍ", "effort": "جهد", "journey": "رحلة", "patience": "صبر"
+};
+
+const stories = [
+  {
+    title: "The Fox and the Crow 🦊🐦",
+    level: "A1",
+    text: "One day, a clever fox saw a crow sitting on a tree. The crow had a piece of cheese in her mouth. The fox was hungry and wanted the cheese. He said, 'You have a beautiful voice! Please sing for me.' The crow was happy to hear this praise. She opened her mouth to sing, and the cheese fell down. The fox caught it and ran away. The crow learned a lesson that day."
+  },
+  {
+    title: "The Lion and the Mouse 🦁🐭",
+    level: "A2",
+    text: "A big lion was sleeping in the forest. A small mouse ran over his face and woke him up. The lion was angry and caught the mouse. 'Please let me go,' said the mouse. 'One day, I will help you.' The lion laughed because the mouse was so small. But he let the mouse go. Weeks later, the lion got caught in a net. The mouse heard his roar and came to help. She bit the net and set the lion free. 'You see,' said the mouse, 'even a small friend can be a great help.'"
+  },
+  {
+    title: "The Sun and the Wind ☀️💨",
+    level: "B1",
+    text: "The sun and the wind had an argument. The wind said, 'I am stronger than you.' The sun smiled and said, 'Let us test our strength.' They saw a traveler walking on the road wearing a warm coat. 'Whoever can make him take off his coat is the winner,' said the sun. The wind blew hard, but the traveler held his coat tighter. Then the sun shone brightly and warmly. Soon, the traveler felt hot and took off his coat. The sun won because gentleness is stronger than force."
+  },
+  {
+    title: "The Golden Egg 🥚✨",
+    level: "B1",
+    text: "A farmer had a goose that laid a golden egg every day. The farmer sold the eggs and became rich. But he was greedy and wanted more. He thought, 'If I cut open the goose, I will get all the eggs at once.' So he killed the goose. But inside, there was nothing. The farmer lost his goose and his golden eggs. He learned that greed destroys what patience builds."
+  },
+  {
+    title: "The Ant and the Grasshopper 🐜🦗",
+    level: "B2",
+    text: "In the summer, an ant worked hard, collecting food for the winter. A grasshopper laughed at her. 'Why do you work so hard? Come and enjoy the sunshine!' The ant replied, 'I am saving food for the winter. You should do the same.' The grasshopper ignored her advice and kept playing. When winter came, the grasshopper had nothing to eat. He went to the ant and asked for food. The ant shared her food but said, 'Next time, remember to prepare for the future.'"
+  },
+  {
+    title: "The Honest Woodcutter 🪓💎",
+    level: "B2",
+    text: "A poor woodcutter was cutting a tree near a river when his axe fell into the water. He was very sad because he could not work without it. Suddenly, a spirit appeared and offered him a golden axe. 'Is this yours?' she asked. 'No,' said the woodcutter honestly. She showed him a silver axe. Again, he said no. Finally, she brought his old iron axe. 'Yes, this is mine!' he said happily. The spirit was impressed by his honesty and gave him all three axes as a reward."
+  },
+  {
+    title: "The Power of Persistence 💪🎓",
+    level: "C1",
+    text: "Sarah was a student who struggled with mathematics. She failed her first exam and felt discouraged. However, she refused to give up. She studied every morning and evening, solving problems until she understood them. She asked her teacher for help and joined a study group. Her friends supported her through difficult moments. After months of hard work, she passed her final exam with a high grade. Her success was not a result of talent, but of persistence and resilience. She realized that failure is not the end—it is simply a stepping stone toward achievement."
+  },
+  {
+    title: "The Mountain Journey 🏔️🌄",
+    level: "C1",
+    text: "Three friends decided to climb a mountain. The journey was long and the path was steep. After two hours, the first friend said, 'I am too tired. I will go back.' After four hours, the second friend said, 'The top is too far. It is not possible.' But the third friend continued, step by step, despite the pain and the wind. At sunset, she reached the top alone. From there, she saw a view so beautiful that all her effort felt insignificant compared to the reward. She understood that the most rewarding journeys are often the most difficult ones."
+  }
+];
+
+/* ============================================================
+   منطق التطبيق
+   ============================================================ */
+let currentLevel = 'A1';
+
+function switchTab(tab, btn) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById(tab).classList.add('active');
+}
+
+function showLevel(level, btn) {
+  currentLevel = level;
+  document.querySelectorAll('.level-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderWords();
+}
+
+function renderWords() {
+  const grid = document.getElementById('wordsGrid');
+  const words = vocabulary[currentLevel] || [];
+  if (words.length === 0) {
+    grid.innerHTML = '<p class="empty-msg">لا توجد كلمات لهذا المستوى بعد.</p>';
+    return;
+  }
+  grid.innerHTML = words.map(w => `
+    <div class="word-card">
+      <div class="word-en">${w.en}</div>
+      <div class="word-ar">${w.ar}</div>
+      <div class="word-example">
+        ${w.ex}
+        <div class="ar-ex">${w.exAr}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderStories() {
+  const list = document.getElementById('storiesList');
+  list.innerHTML = stories.map((s, i) => `
+    <div class="story-item" onclick="openStory(${i})">
+      <h3>${s.title}</h3>
+      <p>المستوى: ${s.level}</p>
+    </div>
+  `).join('');
+}
+
+function openStory(index) {
+  const story = stories[index];
+  document.getElementById('storiesListView').style.display = 'none';
+  document.getElementById('storyView').style.display = 'block';
+  document.getElementById('storyTitle').textContent = story.title;
+
+  // جعل الكلمات قابلة للنقر
+  const words = story.text.split(/(\s+|[.,!?'"]+)/);
+  const html = words.map(token => {
+    const clean = token.toLowerCase().replace(/[^a-z\s]/g, '').trim();
+    if (clean && dictionary[clean] && /^[a-zA-Z]+$/.test(token)) {
+      return `<span class="clickable-word" data-word="${clean}">${token}</span>`;
+    }
+    return token;
+  }).join('');
+
+  document.getElementById('storyContent').innerHTML = html;
+
+  // إضافة مستمعي النقر
+  document.querySelectorAll('#storyContent .clickable-word').forEach(el => {
+    el.addEventListener('click', e => {
+      e.stopPropagation();
+      const word = el.dataset.word;
+      showPopup(word, dictionary[word]);
+      el.classList.add('known');
+    });
+  });
+}
+
+function closeStory() {
+  document.getElementById('storiesListView').style.display = 'block';
+  document.getElementById('storyView').style.display = 'none';
+}
+
+let popupTimer;
+function showPopup(en, ar) {
+  const popup = document.getElementById('popup');
+  document.getElementById('popEn').textContent = en;
+  document.getElementById('popAr').textContent = ar;
+  popup.classList.add('show');
+  clearTimeout(popupTimer);
+  popupTimer = setTimeout(() => popup.classList.remove('show'), 2500);
+}
+
+// التهيئة
+renderWords();
+renderStories();
+</script>
+</body>
+</html>
