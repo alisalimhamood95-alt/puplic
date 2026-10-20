@@ -400,7 +400,16 @@ function showPopup(en, ar) {
 }
 
 // التهيئة
-renderWords();
+fetch('words.json')
+  .then(response => response.json())
+  .then(data => {
+    for (let level in data) {
+      if (vocabulary[level]) vocabulary[level] = data[level];
+    }
+    renderWords();
+  })
+  .catch(() => renderWords());
+
 renderStories();
 </script>
 </body>
